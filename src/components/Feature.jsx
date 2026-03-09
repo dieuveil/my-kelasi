@@ -222,7 +222,7 @@ export default function Feature() {
         {/* Testimonials Section */}
         <section id="testimonials" className="testimonials section light-background">
           {/* Section Title */}
-          <div className="container section-title" data-aos="fade-up">
+          <div id="features" className="container section-title" data-aos="fade-up">
             <h2 className="text-center">Services</h2>
             <p className="text-center">
             
@@ -259,7 +259,7 @@ export default function Feature() {
         {/* Stats Section */}
         <section id="stats" className="stats section">
           <div className="container" data-aos="fade-up" data-aos-delay={100}>
-            <div className="row gy-4 justify-content-center">
+            <div id="services" className="row gy-4 justify-content-center">
               <span className="about-meta" style={{fontSize: "25px", color: "blue"}}>Fonctionnement</span>
               <div className="col-lg-3 col-md-6 text-center">
                 <div className="stats-item w-100 h-100">

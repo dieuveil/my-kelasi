@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Footer() {
   return (
     <>
       <footer id="footer" className="footer" style={{backgroundColor: "#f3f9ff"}}>
         <div className="container footer-top">
-          <div className="row gy-4">
+          <div className="row gy-4" id="contact">
             <div className="col-lg-4 col-md-6 footer-about">
               <a href="index.html" className="logo d-flex align-items-center">
                 <span className="sitename">Kelasi-Tech</span>
@@ -34,48 +35,44 @@ export default function Footer() {
               </div>
             </div>
             <div className="col-lg-2 col-md-3 footer-links">
-              <h4>Useful Links</h4>
+              <h4>Liens Utils</h4>
               <ul>
                 <li>
-                  <a href="#">Home</a>
+                  <Link to="/connexion">Connexion</Link>
                 </li>
                 <li>
-                  <a href="#">About us</a>
+                  <Link to="/enregistrement">Enregistrement</Link>
                 </li>
               </ul>
             </div>
             <div className="col-lg-2 col-md-3 footer-links">
-              <h4>Our Services</h4>
+              <h4>Tags</h4>
               <ul>
                 <li>
-                  <a href="#">Web Design</a>
+                  <a href="#">Connaissances</a>
                 </li>
                 <li>
-                  <a href="#">Web Development</a>
+                  <a href="#">Rencontres</a>
                 </li>
               </ul>
             </div>
             <div className="col-lg-2 col-md-3 footer-links">
-              <h4>Hic solutasetp</h4>
+              <h4>Revolution</h4>
               <ul>
                 <li>
-                  <a href="#">Molestiae accusamus iure</a>
+                  <a href="#">Transfert Technologique</a>
                 </li>
                 <li>
-                  <a href="#">Excepturi dignissimos</a>
+                  <a href="#">Echange de connaissance</a>
                 </li>
               </ul>
             </div>
             <div className="col-lg-2 col-md-3 footer-links">
-              <h4>Nobis illum</h4>
-              <ul>
-                <li>
-                  <a href="#">Ipsam</a>
-                </li>
-                <li>
-                  <a href="#">Laudantium dolorum</a>
-                </li>
-              </ul>
+               <img
+                    src="/img/kel_c .png"
+                    alt="Hero Image"
+                    className="img-fluid"
+                  />
             </div>
           </div>
         </div>
