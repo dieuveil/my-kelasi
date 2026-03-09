@@ -9,7 +9,7 @@ import { signup } from "../authService";
 import { db } from "../firebase-config";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-
+import VerifyEmail from "../pages/VerifyEmail";
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -58,7 +58,7 @@ export default function Enregistrement() {
         });
 
         message.success("Compte créé avec succès !");
-        navigate("/");
+        navigate("/verify-email");
     } catch (error) {
         console.error("Signup error details:", error);
         message.error(`Erreur lors de la création du compte: ${error.message}`);

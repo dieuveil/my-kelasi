@@ -61,45 +61,15 @@ export default function List_Users() {
         >
           <div className="container" data-aos="fade-up" data-aos-delay={100}>
             <div className="row align-items-center justify-content-center">
-
-              {/* LEFT COLUMN : USER CARD */}
+               
+                {/* LEFT COLUMN : USER CARD */}
               <div className="col-lg-6">
-                <div data-aos="fade-up" data-aos-delay={200}>
-                  <Card
-                    title="Informations utilisateur"
-                    style={{
-                      maxWidth: 420,
-                      margin: "auto",
-                      borderRadius: "10px",
-                      textAlign: "center"
-                    }}
-                  >
-                    <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-                      <Avatar size={80} icon={<UserOutlined />} />
-
-                      <Text strong style={{ fontSize: 18 }}>{currentUser.name}</Text>
-                      <Text type="secondary">{currentUser.email}</Text>
-
-                      <Button
-                        type="primary"
-                        danger
-                        icon={<LogoutOutlined />}
-                        block
-                        loading={loading}
-                        onClick={handleLogout}
-                      >
-                        Se déconnecter
-                      </Button>
-                    </Space>
-                  </Card>
-                </div>
+                Etudiants, Professionels, Enseignants chercheurs
               </div>
 
               {/* RIGHT COLUMN : IMAGE */}
               <div className="col-lg-6">
-                <div className="hero-image" data-aos="zoom-out" data-aos-delay={300}>
-                  <img src="/img/edu.png" alt="Hero Image" className="img-fluid" />
-                </div>
+                
               </div>
 
               {/* USERS */}

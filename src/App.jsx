@@ -2,6 +2,7 @@ import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import { Routes, Route } from "react-router-dom"
+import VerifyEmail from "./pages/VerifyEmail";
 
 import Accueil from './pages/Accueil'
 import Home from './pages/Home'
@@ -11,6 +12,7 @@ import Connexion from './pages/Connexion'
 import Enregistrement from './pages/Enregistrement'
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home_Users from './pages/Home_Users'
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,14 +23,15 @@ function App() {
         <Route path="/" element={<Accueil />} />
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/enregistrement" element={<Enregistrement />} />
-        <Route path="/home2" element={<Home2 />} />
         <Route path="/homeinsertion" element={<Home_Ajout />} />
         <Route path="/homeusers" element={<Home_Users />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
         <Route
           path="/home"
           element={
             <ProtectedRoute>
-              <Home />
+              <Home2 />
             </ProtectedRoute>
           }
         />

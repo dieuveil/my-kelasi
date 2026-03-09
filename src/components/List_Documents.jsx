@@ -83,10 +83,7 @@ export default function List_Documents() {
 
   return (
     <>
-      <Header_Home2 />
-
       <main>
-
         <section
           className="hero section"
           style={{ padding: "40px" }}
@@ -221,8 +218,6 @@ export default function List_Documents() {
         </section>
 
       </main>
-
-      <Footer />
     </>
   );
 }

@@ -1,149 +1,249 @@
-import React, { useState, useEffect } from "react";
-import Footer from "../components/Footer";
-import Header_Home from "../components/Header_Home";
+import React, { useState, useEffect } from 'react';
+import { Layout, Menu, Typography, Button, theme, Space } from 'antd';
+import {
+  DashboardOutlined,
+  UserOutlined,
+  ShoppingOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  BellOutlined,
+} from '@ant-design/icons';
 
-import { Card, Avatar, Typography, Button, message as antdMessage, Space, Row, Col } from "antd";
-import { UserOutlined, LogoutOutlined, DownloadOutlined } from "@ant-design/icons";
+import 'antd/dist/reset.css';
+import styles from './Home.module.css';
+
+import List_Users from "../components/List_Users";
+import Add_Documents from "../components/Add_Documents";
+import List_Documents from "../components/List_Documents";
+
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-import { db } from "../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+const { Header, Sider, Content } = Layout;
+const { Title, Text } = Typography;
 
-const { Text } = Typography;
 
-export default function Connexion() {
+// Content Components
+const Dashboard = () => <List_Documents />;
+const Users = () => <List_Users />;
+const Orders = () => <Add_Documents />;
+
+const Settings = () => (
+  <div className={styles.contentContainer}>
+    <Title level={2}>Settings</Title>
+    <div className={styles.placeholderContent}>
+      <Text>Settings content goes here</Text>
+    </div>
+  </div>
+);
+
+function Home2() {
+
+  const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('1');
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [documents, setDocuments] = useState([]);
+  const auth = getAuth();
 
-  // Example user (replace with your real auth user)
-  const user = {
-    email: "user@example.com",
-    name: "Utilisateur",
-  };
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
-  const handleLogout = async () => {
-    setLoading(true);
-    try {
-      // Clear auth if needed
-      localStorage.removeItem("token");
 
-      antdMessage.success("Déconnexion réussie");
-      navigate("/connexion");
-    } catch (error) {
-      antdMessage.error("Erreur lors de la déconnexion");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch documents from Firestore
+  // Detect logged user
   useEffect(() => {
-    const fetchDocuments = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "documents"));
-        const docs = querySnapshot.docs.map((doc) => doc.data());
-        setDocuments(docs);
-      } catch (error) {
-        console.error(error);
-        antdMessage.error("Erreur lors du chargement des documents");
-      }
-    };
 
-    fetchDocuments();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        navigate("/connexion");
+      }
+
+    });
+
+    return () => unsubscribe();
+
   }, []);
 
+
+  const handleMenuClick = (e) => {
+    setSelectedKey(e.key);
+  };
+
+
+  // Logout function
+  const handleLogout = async () => {
+
+    try {
+
+      await signOut(auth);
+
+      navigate("/login");
+
+    } catch (error) {
+
+      console.error("Logout error:", error);
+
+    }
+
+  };
+
+
+  // Render content
+  const renderContent = () => {
+
+    switch (selectedKey) {
+
+      case '1':
+        return <Dashboard />;
+
+      case '2':
+        return <Users />;
+
+      case '3':
+        return <Orders />;
+
+      case '4':
+        return <Settings />;
+
+      default:
+        return <Dashboard />;
+    }
+
+  };
+
+
+
   return (
-    <>
-      <Header_Home />
+    <Layout style={{ minHeight: '100vh' }}>
 
-      <main className="main" style={{ marginRight: "60px", marginLeft: "60px" }}>
-        <section
-          id="hero"
-          className="hero section"
-          style={{ paddingRight: "50px", paddingLeft: "30px" }}
-        >
-          <div className="container" data-aos="fade-up" data-aos-delay={100}>
-            <div className="row align-items-center justify-content-center">
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        theme="light"
+        style={{
+          boxShadow: '2px 0 8px rgba(0,0,0,0.05)',
+        }}
+      >
 
-              {/* LEFT COLUMN : USER CARD */}
-              <div className="col-lg-6">
-                <div data-aos="fade-up" data-aos-delay={200}>
-                  <Card
-                    title="Informations utilisateur"
-                    style={{
-                      maxWidth: 420,
-                      margin: "auto",
-                      borderRadius: "10px",
-                      textAlign: "center"
-                    }}
-                  >
-                    <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-                      <Avatar size={80} icon={<UserOutlined />} />
+        <div className={styles.logoContainer}>
+          <Title level={collapsed ? 5 : 3} style={{ margin: 0, color: '#1890ff' }}>
+            {collapsed ? 'A' : 'Kelasi-Tech'}
+          </Title>
+        </div>
 
-                      <Text strong style={{ fontSize: 18 }}>
-                        {user.name}
-                      </Text>
+        {/* User Info */}
+        <div className={styles.userInfoSidebar}>
 
-                      <Text type="secondary">{user.email}</Text>
+          {!collapsed && user && (
+            <div className={styles.userDetails}>
 
-                      <Button
-                        type="primary"
-                        danger
-                        icon={<LogoutOutlined />}
-                        block
-                        loading={loading}
-                        onClick={handleLogout}
-                      >
-                        Se déconnecter
-                      </Button>
-                    </Space>
-                  </Card>
-                </div>
-              </div>
+              <Text strong>
+                {user.name || "Utilisateurs"}
+              </Text>
 
-              {/* RIGHT COLUMN : IMAGE */}
-              <div className="col-lg-6">
-                <div className="hero-image" data-aos="zoom-out" data-aos-delay={300}>
-                  <img src="/img/edu.png" alt="Hero Image" className="img-fluid" />
-                </div>
-              </div>
+              <br />
 
-              {/* DOCUMENTS */}
-              <div id="products" className="row mt-5">
-                {documents.length === 0 && <p>Aucun document disponible</p>}
-
-                {documents.map((doc, index) => (
-                  <Col key={index} xs={24} sm={12} md={8} lg={6} className="mb-4">
-                    <Card
-                      title={doc.file_name}
-                      bordered={true}
-                      hoverable
-                      actions={[
-                        <Button
-                          type="link"
-                          icon={<DownloadOutlined />}
-                          onClick={() => window.open(doc.pdf_url, "_blank")}
-                        >
-                          Télécharger
-                        </Button>,
-                      ]}
-                    >
-                      <p><strong>Type:</strong> {Array.isArray(doc.publication_type) ? doc.publication_type.join(", ") : doc.publication_type}</p>
-                      <p><strong>Statut:</strong> {doc.statut}</p>
-                      <p><strong>Domaine:</strong> {Array.isArray(doc.domaine) ? doc.domaine.join(", ") : doc.domaine}</p>
-                      <p><strong>Description:</strong> {doc.doc_description}</p>
-                    </Card>
-                  </Col>
-                ))}
-              </div>
+              <Text type="secondary" style={{ fontSize: '12px' }}>
+                {user.email}
+              </Text>
 
             </div>
-          </div>
-        </section>
-      </main>
+          )}
 
-      <Footer />
-    </>
+        </div>
+
+
+        <Menu
+          theme="light"
+          mode="inline"
+          selectedKeys={[selectedKey]}
+          onClick={handleMenuClick}
+          items={[
+            {
+              key: '1',
+              icon: <DashboardOutlined />,
+              label: 'Liste De Documents',
+            },
+            {
+              key: '2',
+              icon: <UserOutlined />,
+              label: 'Autres Utilisateurs',
+            },
+            {
+              key: '3',
+              icon: <ShoppingOutlined />,
+              label: 'Publier Un Document',
+            },
+            {
+              key: '4',
+              icon: <SettingOutlined />,
+              label: 'Parametres',
+            },
+          ]}
+        />
+
+      </Sider>
+
+
+      <Layout>
+
+        <Header
+          style={{
+            padding: '0 24px',
+            background: colorBgContainer,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+          }}
+        >
+
+          <Title level={4} style={{ margin: 0 }}>
+            Bienvenu Sur Kelasi-Tech
+          </Title>
+
+          <Space size="middle">
+
+            <Button type="text" icon={<BellOutlined />} />
+
+            {/* Logout Icon */}
+            <Button
+              type="text"
+              icon={<LogoutOutlined />}
+              onClick={handleLogout}
+            />
+
+          </Space>
+
+        </Header>
+
+
+        <Content style={{ margin: '24px' }}>
+
+          <div
+            style={{
+              padding: 24,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+              minHeight: 'calc(100vh - 112px)',
+            }}
+          >
+
+            {renderContent()}
+
+          </div>
+
+        </Content>
+
+      </Layout>
+
+    </Layout>
   );
 }
+
+export default Home2;

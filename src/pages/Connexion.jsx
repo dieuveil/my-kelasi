@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Header_Connect from "../components/Header_Connect";
+//import { Link, useNavigate } from "react-router-dom";
 
 import { Form, Input, Button, message as antdMessage, Card } from "antd";
 import { login } from "../authService"; // adjust the path if necessary
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Connexion() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function Connexion() {
 
       if (result && result.success) {
         antdMessage.success(`Welcome ${result.user.email}`);
-        navigate("/"); // ✅ Redirect after successful login
+        navigate("/home"); // ✅ Redirect after successful login
       } else {
         const errorMsg = result?.error || "Email ou mot de passe incorrect";
         antdMessage.error(errorMsg);
@@ -93,6 +94,7 @@ export default function Connexion() {
                         </Button>
                       </Form.Item>
                     </Form>
+                    <Link to="/reset-password">Mot De Passe Oublié?</Link>
                   </Card>
                 </div>
               </div>
