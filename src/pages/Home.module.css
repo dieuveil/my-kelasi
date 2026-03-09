@@ -1,0 +1,111 @@
+/* All class names are now locally scoped */
+.logoContainer {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+}
+
+.userInfoSidebar {
+  padding: 16px;
+  text-align: center;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.logoutContainer {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  padding: 0 16px;
+}
+
+.logoutButton {
+  color: #ff4d4f !important;
+}
+
+.logoutButton:hover {
+  color: #ff7875 !important;
+  background-color: #fff1f0 !important;
+}
+
+/* Content Styles */
+.contentContainer {
+  padding: 8px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.statCard {
+  background: #f8f9fa;
+  padding: 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.placeholderContent {
+  background: #f5f5f5;
+  padding: 48px;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+/* Global styles that need to be applied globally */
+:global(.ant-layout-sider) {
+  position: relative !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .userInfoSidebar {
+    padding: 12px;
+  }
+}
+
+/* Custom scrollbar - these will be applied globally */
+:global(::-webkit-scrollbar) {
+  width: 6px;
+  height: 6px;
+}
+
+:global(::-webkit-scrollbar-track) {
+  background: #f1f1f1;
+}
+
+:global(::-webkit-scrollbar-thumb) {
+  background: #888;
+  border-radius: 3px;
+}
+
+:global(::-webkit-scrollbar-thumb:hover) {
+  background: #555;
+}
