@@ -26,11 +26,7 @@ export default function Header_Connect() {
                   Accueil
                 </Link>
               </li>
-              <li>
-                <Link to="/" className="">
-                  Liste De Documents
-                </Link>
-              </li>
+             
 
             </ul>
             <i className="mobile-nav-toggle d-xl-none bi bi-list" />
