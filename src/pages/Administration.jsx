@@ -15,11 +15,12 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Header_Home from "../components/Header_Home";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-export default function Add_Documents() {
+export default function Administration() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function Add_Documents() {
     try {
       const docId = Date.now().toString();
 
-      await addDoc(collection(db, "documents"), {
+      await addDoc(collection(db, "competition"), {
         docId: docId,
         userid: user.uid,
         file_name: values.file_name,
@@ -56,7 +57,7 @@ export default function Add_Documents() {
       });
 
       antdMessage.success("Document ajouté avec succès");
-      navigate("/home");
+      navigate("/administration");
 
     } catch (error) {
       console.error("Erreur ajout document:", error);
@@ -68,6 +69,7 @@ export default function Add_Documents() {
 
   return (
     <>
+      <Header_Home />
       <main>
         <section className="hero section" style={{ paddingRight: "20px", paddingLeft: "20px" }}>
           <div className="container">
@@ -97,6 +99,7 @@ export default function Add_Documents() {
                         <Option value="rapport">Rapport</Option>
                         <Option value="memoire">Mémoire</Option>
                         <Option value="these">Thèse</Option>
+                        <Option value="projet">Projet</Option>
                       </Select>
                     </Form.Item>
 

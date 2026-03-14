@@ -172,13 +172,13 @@ export default function Feature() {
                     <div className="col-lg-5">
                       <div className="profile d-flex align-items-center gap-3">
                         <img
-                          src="img/veil.jpg"
+                          src="/img/kel_c .png"
                           alt="CEO Profile"
                           className="profile-image"
                         />
                         <div>
-                          <h4 className="profile-name text-center">Dieuveil MABIROU</h4>
-                          <p className="profile-position text-center">Founder</p>
+                          <h4 className="profile-name text-center">Kelasi-Tech Academy</h4>
+                          <p className="profile-position text-center">Formation et Accomgnement</p>
                         </div>
                       </div>
                     </div>
@@ -219,42 +219,59 @@ export default function Feature() {
         </section>
         {/* /About Section */}
 
-        {/* Testimonials Section */}
+        {/* Services Section */}
         <section id="testimonials" className="testimonials section light-background">
+
           {/* Section Title */}
           <div id="features" className="container section-title" data-aos="fade-up">
             <h2 className="text-center">Services</h2>
-            <p className="text-center">
-            
-            </p>
           </div>
-          {/* End Section Title */}
+
           <div className="container">
-            <div className="row g-5 justify-content-center">
-              {/* Testimonial Item */}
-              <div className="col-lg-6" data-aos="fade-up" data-aos-delay={100}>
-                <div className="testimonial-item text-center">
-                     <ul
-                        style={{
-                          textAlign: "justify",
-                          color: "#333",
-                          fontSize: "1.1em",
-                        }}
-                      >
-                        <li>Vente/Échange de documents PDF</li>
-                        <li>Formation</li>
-                        <li>
-                          Accompagnement pour la réalisation des projets académiques (soutenance) et
-                          professionnels innovants à travers des prototypes
-                        </li>
-                      </ul>
+            <div className="row g-4 text-center">
+
+              {/* Service 1 */}
+              <div className="col-lg-4 col-md-6" data-aos="fade-up">
+                <div className="p-4 shadow-sm rounded bg-white h-100">
+                  <i className="bi bi-file-earmark-pdf-fill fs-1 text-danger"></i>
+                  <li style={{ listStyle: "none", fontSize: "1.1em" }}>
+                    Vente / Échange de documents PDF
+                  </li>
                 </div>
               </div>
-              {/* More testimonials... */}
+
+              {/* Service 2 */}
+              <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div className="p-4 shadow-sm rounded bg-white h-100">
+                  <img
+                    src="/img/big_data.webp"
+                    alt="Formation"
+                    style={{ width: "70px", marginBottom: "15px" }}
+                  />
+                  <li style={{ listStyle: "none", fontSize: "1.1em" }}>
+                    Formation : Intelligence Artificielle, Big data engineering, Développement web
+                  </li>
+                </div>
+              </div>
+
+              {/* Service 3 */}
+              <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div className="p-4 shadow-sm rounded bg-white h-100">
+                  <img
+                    src="/img/formation.jpg"
+                    alt="Projet"
+                    style={{ width: "70px", marginBottom: "15px" }}
+                  />
+                  <li style={{ listStyle: "none", fontSize: "1.1em" }}>
+                    Accompagnement pour la réalisation des projets académiques et professionnels innovants
+                  </li>
+                </div>
+              </div>
+
             </div>
           </div>
+
         </section>
-        {/* /Testimonials Section */}
 
         {/* Stats Section */}
         <section id="stats" className="stats section">

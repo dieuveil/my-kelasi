@@ -13,6 +13,7 @@ import Enregistrement from './pages/Enregistrement'
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home_Users from './pages/Home_Users'
 import ResetPassword from "./pages/ResetPassword";
+import Administration from "./pages/Administration";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,7 +27,8 @@ function App() {
         <Route path="/homeinsertion" element={<Home_Ajout />} />
         <Route path="/homeusers" element={<Home_Users />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/administration" element={<Administration />} />
         <Route
           path="/home"
           element={

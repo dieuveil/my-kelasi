@@ -15,6 +15,7 @@ import styles from './Home.module.css';
 import List_Users from "../components/List_Users";
 import Add_Documents from "../components/Add_Documents";
 import List_Documents from "../components/List_Documents";
+import Competition from '../components/Competition';
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { db } from "../firebase-config";
@@ -32,12 +33,7 @@ const Users = () => <List_Users />;
 const Orders = () => <Add_Documents />;
 
 const Settings = () => (
-  <div className={styles.contentContainer}>
-    <Title level={2}>Settings</Title>
-    <div className={styles.placeholderContent}>
-      <Text>Settings content goes here</Text>
-    </div>
-  </div>
+  <div>Organisation d'une compétition d'entrepreneurs en cours ...</div>
 );
 
 
@@ -220,7 +216,7 @@ function Home2() {
             {
               key: '4',
               icon: <SettingOutlined />,
-              label: 'Parametres',
+              label: 'Compétition',
             },
           ]}
         />
