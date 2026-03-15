@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Typography, Button, theme, Space, Avatar } from 'antd';
+import { Layout, Menu, Typography, Button, theme, Space, Avatar, Divider } from 'antd';
 import {
   DashboardOutlined,
   UserOutlined,
   ShoppingOutlined,
   SettingOutlined,
   LogoutOutlined,
-  BellOutlined,
 } from '@ant-design/icons';
 
 import 'antd/dist/reset.css';
@@ -41,7 +40,6 @@ function Home2() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
-
   const [userData, setUserData] = useState(null);
 
   const navigate = useNavigate();
@@ -98,13 +96,12 @@ function Home2() {
   };
 
 
-  // Logout function
+  // Logout
   const handleLogout = async () => {
 
     try {
 
       await signOut(auth);
-
       navigate("/connexion");
 
     } catch (error) {
@@ -152,6 +149,7 @@ function Home2() {
         }}
       >
 
+        {/* Logo */}
         <div className={styles.logoContainer}>
           <Title level={collapsed ? 5 : 3} style={{ margin: 0, color: '#1890ff' }}>
             {collapsed ? 'A' : 'Kelasi-Tech'}
@@ -159,39 +157,52 @@ function Home2() {
         </div>
 
 
-        {/* User Info */}
-        <div className={styles.userInfoSidebar}>
+        {/* User Profile */}
+        {!collapsed && userData && (
 
-          {!collapsed && userData && (
+          <div style={{ textAlign: "center", padding: "20px" }}>
 
-            <div className={styles.userDetails} style={{ textAlign: "center" }}>
-              
-              <Avatar
-                size={64}
-                icon={<UserOutlined />}
-                style={{ backgroundColor: "#1890ff", marginLeft: "50px" }}
-              />
+            {/* Enterprise Avatar */}
+            <Avatar
+              size={90}
+              style={{
+                backgroundColor: "#1677ff",
+                fontSize: "30px",
+                marginBottom: "10px"
+              }}
+            >
+              {userData.name?.charAt(0)}
+            </Avatar>
 
-              <Text strong>
+            {/* User Info */}
+            <Space direction="vertical" size={0}>
+
+              <Text strong style={{ fontSize: "14px" }}>
                 {userData.name}
               </Text>
 
-              <Text type="secondary" style={{ fontSize: '12px' }}>
+              <Text type="secondary" style={{ fontSize: "12px" }}>
                 {userData.email}
               </Text>
 
-              <Text type="secondary" style={{ fontSize: '12px' }}>
+              <Text type="secondary" style={{ fontSize: "12px" }}>
                 {userData.phone}
               </Text>
 
+              <Text type="secondary" style={{ fontSize: "12px" }}>
+                {userData.town}
+              </Text>
 
-            </div>
+            </Space>
 
-          )}
+            <Divider style={{ margin: "15px 0" }} />
 
-        </div>
+          </div>
+
+        )}
 
 
+        {/* Menu */}
         <Menu
           theme="light"
           mode="inline"
@@ -226,6 +237,7 @@ function Home2() {
 
       <Layout>
 
+        {/* Header */}
         <Header
           style={{
             padding: '0 24px',
@@ -238,10 +250,9 @@ function Home2() {
         >
 
           <Title level={4} style={{ margin: 0 }}>
-            
           </Title>
 
-          <Space size="middle">
+          <Space>
 
             <Button
               type="text"
@@ -254,6 +265,7 @@ function Home2() {
         </Header>
 
 
+        {/* Content */}
         <Content style={{ margin: '24px' }}>
 
           <div

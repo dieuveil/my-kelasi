@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Typography, Button, theme, Space } from 'antd';
+import { Layout, Menu, Typography, Button, theme, Space, Avatar } from 'antd';
 import {
   DashboardOutlined,
   UserOutlined,
@@ -15,33 +15,34 @@ import styles from './Home.module.css';
 import List_Users from "../components/List_Users";
 import Add_Documents from "../components/Add_Documents";
 import List_Documents from "../components/List_Documents";
+import Competition from '../components/Competition';
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { db } from "../firebase-config";
+import { doc, getDoc } from "firebase/firestore";
+
 import { useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
 
-// Content Components
+// Dashboard pages
 const Dashboard = () => <List_Documents />;
 const Users = () => <List_Users />;
 const Orders = () => <Add_Documents />;
 
 const Settings = () => (
-  <div className={styles.contentContainer}>
-    <Title level={2}>Settings</Title>
-    <div className={styles.placeholderContent}>
-      <Text>Settings content goes here</Text>
-    </div>
-  </div>
+  <div>Organisation d'une compétition d'entrepreneurs en cours ...</div>
 );
+
 
 function Home2() {
 
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState('1');
-  const [user, setUser] = useState(null);
+
+  const [userData, setUserData] = useState(null);
 
   const navigate = useNavigate();
   const auth = getAuth();
@@ -51,15 +52,38 @@ function Home2() {
   } = theme.useToken();
 
 
-  // Detect logged user
+  // Detect logged user and fetch Firestore data
   useEffect(() => {
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
 
       if (currentUser) {
-        setUser(currentUser);
+
+        try {
+
+          const userRef = doc(db, "users", currentUser.uid);
+          const userSnap = await getDoc(userRef);
+
+          if (userSnap.exists()) {
+
+            setUserData(userSnap.data());
+
+          } else {
+
+            console.log("User document not found");
+
+          }
+
+        } catch (error) {
+
+          console.error("Error loading user:", error);
+
+        }
+
       } else {
+
         navigate("/connexion");
+
       }
 
     });
@@ -81,7 +105,7 @@ function Home2() {
 
       await signOut(auth);
 
-      navigate("/login");
+      navigate("/connexion");
 
     } catch (error) {
 
@@ -92,7 +116,6 @@ function Home2() {
   };
 
 
-  // Render content
   const renderContent = () => {
 
     switch (selectedKey) {
@@ -116,7 +139,6 @@ function Home2() {
   };
 
 
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
 
@@ -136,23 +158,35 @@ function Home2() {
           </Title>
         </div>
 
+
         {/* User Info */}
         <div className={styles.userInfoSidebar}>
 
-          {!collapsed && user && (
-            <div className={styles.userDetails}>
+          {!collapsed && userData && (
+
+            <div className={styles.userDetails} style={{ textAlign: "center" }}>
+              
+              <Avatar
+                size={64}
+                icon={<UserOutlined />}
+                style={{ backgroundColor: "#1890ff", marginLeft: "50px" }}
+              />
 
               <Text strong>
-                {user.name || "Utilisateurs"}
+                {userData.name}
               </Text>
-
-              <br />
 
               <Text type="secondary" style={{ fontSize: '12px' }}>
-                {user.email}
+                {userData.email}
               </Text>
 
+              <Text type="secondary" style={{ fontSize: '12px' }}>
+                {userData.phone}
+              </Text>
+
+
             </div>
+
           )}
 
         </div>
@@ -182,7 +216,7 @@ function Home2() {
             {
               key: '4',
               icon: <SettingOutlined />,
-              label: 'Parametres',
+              label: 'Compétition',
             },
           ]}
         />
@@ -204,14 +238,11 @@ function Home2() {
         >
 
           <Title level={4} style={{ margin: 0 }}>
-            Bienvenu Sur Kelasi-Tech
+            
           </Title>
 
           <Space size="middle">
 
-            <Button type="text" icon={<BellOutlined />} />
-
-            {/* Logout Icon */}
             <Button
               type="text"
               icon={<LogoutOutlined />}
